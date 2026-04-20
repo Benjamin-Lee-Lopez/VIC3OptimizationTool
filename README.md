@@ -1,0 +1,5 @@
+Victoria 3 Optimization Tool is meant to be a personal long term project to assist with the heavy calculations involved with each playthrough
+
+The main goal is to help try and see how much of the purely mathematical questions can be offloaded and automated. Balancing budgets, managing deficit spending, and predicting the effect of new production methods, are just a few examples of questions I plan to expedite the answer to.
+
+At the moment, the plan is to allow for manual input of certain metrics, and then outputting how both the immediate and reverberating effects will impact the nation in question. However, on a larger scale, I would hope to take current save game information in order to answer those questions with more accuracy, and to take in further inputs, such as market value of goods, wages, obsessions & taboos, and any more niche variables.
