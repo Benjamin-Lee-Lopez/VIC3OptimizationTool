@@ -73,7 +73,6 @@ def acceptable_deficit_rate(GDP, expenses, growth):
 
     yearly_expenses = abs(expenses * 52.1429) #number is the decimal point for weeks in a year
     expected_GDP_increase = GDP * growth
-    expected_GDP = GDP + expected_GDP_increase
 
     growth_ratio = abs(expected_GDP_increase/yearly_expenses)
     balance_string = f"{(expected_GDP_increase - yearly_expenses):.2f}"
