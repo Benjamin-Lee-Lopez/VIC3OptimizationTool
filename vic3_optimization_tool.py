@@ -61,13 +61,13 @@ tool_base_value = 40
 #available credit. This will be the baseline of 'acceptable'.
 
 #Using underscores for readability as we are working with larger numbers
-test_GDP = 10_000_000
+test_GDP = float(input("What is your current GDP? "))
 
 #expenses will refer to the in game indicator for spent funds, which displays the funds spent on a weekly basis
-test_expenses = 10_000
+test_expenses = float(input("What is your weekly expense? "))
 
 #Number will be represented as a decimal.
-test_predicted_growth = .1
+test_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
 
 def acceptable_deficit_rate(GDP, expenses, growth):
 
