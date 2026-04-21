@@ -60,14 +60,6 @@ tool_base_value = 40
 #Due to this, a 10% increase in GDP effectively means that if 10% of GDP was spent of debt would be a net wash for
 #available credit. This will be the baseline of 'acceptable'.
 
-#Using underscores for readability as we are working with larger numbers
-test_GDP = float(input("What is your current GDP? "))
-
-#expenses will refer to the in game indicator for spent funds, which displays the funds spent on a weekly basis
-test_expenses = float(input("What is your weekly expense? "))
-
-#Number will be represented as a decimal.
-test_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
 
 def acceptable_deficit_rate(GDP, expenses, growth):
 
@@ -76,22 +68,76 @@ def acceptable_deficit_rate(GDP, expenses, growth):
 
     growth_ratio = abs(expected_GDP_increase/yearly_expenses)
     growth_string = f"{(growth_ratio * 100):.2f}"
+
     balance_string = f"{(expected_GDP_increase - yearly_expenses):.2f}"
 
 
     if growth_ratio < .8:
         print("Rethink your planning")
-        print("You have a projected balance of $" + balance_string + ", under expectations. You growing at a rate of " + growth_string + "% of what you are spending.")
+        print("You have a projected balance of $" + balance_string + ", under expectations. You growing at a rate of " + growth_string + "% compared to your expenses.")
 
     elif growth_ratio > 1.6:
         print("Playing it safe")
-        print("You have a projected balance of $" + balance_string + ", well above expectations. You are growing at a rate of " + growth_string + "% of what you are spending.")
+        print("You have a projected balance of $" + balance_string + ", well above expectations. You are growing at a rate of " + growth_string + "% compared to your expenses.")
 
     else:
         print("Right on target")
-        print("You have a projected balance of $" + balance_string + ", meeting expectations. You are growing at a rate of " + growth_string + "% of what you are spending.")
+        print("You have a projected balance of $" + balance_string + ", meeting expectations. You are growing at a rate of " + growth_string + "% compared to your expenses.")
+
+#Below is the function to alter user information. Currently not in use
+""" 
+def user_info(change='yes'):
     
-try:
-    acceptable_deficit_rate(test_GDP, test_expenses, test_predicted_growth)
-except:
-    print("Unexpected error has occured during acceptable_deficit_rate")
+    if change == 'yes' or change == 'y':
+        
+        user_GDP = float(input("What is your current GDP? "))
+
+        #expenses will refer to the in game indicator for spent funds, which displays the funds spent on a weekly basis
+        user_expenses = float(input("What is your weekly expense? "))
+
+        #Number will be represented as a decimal, but entered as a percentage
+        user_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
+"""
+
+
+def __main__():
+
+    #User info in progress, must relaunch program to change
+    #user_info()
+
+    user_GDP = float(input("What is your current GDP? "))
+
+    #expenses will refer to the in game indicator for spent funds, which displays the funds spent on a weekly basis
+    user_expenses = float(input("What is your weekly expense? "))
+
+    #Number will be represented as a decimal, but entered as a percentage
+    user_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
+
+    tool_in_use = True
+    while tool_in_use == True:
+        print("Which tool would you like to select? (Select with the associated number)")
+        select_tool = int(input("1. Deficit Spending Calculator; 2. Change Country Information: "))
+
+        if select_tool == 1:
+            acceptable_deficit_rate(user_GDP, user_expenses, user_predicted_growth)
+
+        #elif select_tool == 2:
+            #user_info(True)
+
+        else:
+            print("Invalid input, does not exist")
+        
+        reselect_input = input("Do you wish to use another tool? (yes/y or no/n): ")
+        if reselect_input.lower() != "yes" and reselect_input.lower() != "y":
+            #user_change_input = input("Do you wish to alter any of your nation's information? (yes/y or no/n)")
+            #user_info(user_change_input.lower())
+            break
+        else:
+            pass
+
+    print("Ending now.")    
+
+__main__()
+        
+        
+        
