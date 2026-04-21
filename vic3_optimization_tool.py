@@ -75,20 +75,23 @@ def acceptable_deficit_rate(GDP, expenses, growth):
     expected_GDP_increase = GDP * growth
 
     growth_ratio = abs(expected_GDP_increase/yearly_expenses)
+    growth_string = f"{(growth_ratio * 100):.2f}"
     balance_string = f"{(expected_GDP_increase - yearly_expenses):.2f}"
 
 
     if growth_ratio < .8:
         print("Rethink your planning")
-        print("You have a projected balance of $" + balance_string + ", under expectations.")
+        print("You have a projected balance of $" + balance_string + ", under expectations. You growing at a rate of " + growth_string + "% of what you are spending.")
 
     elif growth_ratio > 1.6:
         print("Playing it safe")
-        print("You have a projected balance of $" + balance_string + ", well above expectations.")
+        print("You have a projected balance of $" + balance_string + ", well above expectations. You are growing at a rate of " + growth_string + "% of what you are spending.")
 
     else:
         print("Right on target")
-        print("You have a projected balance of $" + balance_string + ", meeting expectations")
+        print("You have a projected balance of $" + balance_string + ", meeting expectations. You are growing at a rate of " + growth_string + "% of what you are spending.")
     
-
-acceptable_deficit_rate(test_GDP, test_expenses, test_predicted_growth)
+try:
+    acceptable_deficit_rate(test_GDP, test_expenses, test_predicted_growth)
+except:
+    print("Unexpected error has occured during acceptable_deficit_rate")
