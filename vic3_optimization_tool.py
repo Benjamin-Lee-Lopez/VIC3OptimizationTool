@@ -31,7 +31,7 @@ log_resource_value = 20
 log_building_cc = 200
 
 iron_output_pas = 20
-log_input_pas = -5 #Loss of 5 tools
+iron_input_pas = -5 #Loss of 5 tools
 iron_workforce_pas = {500: "shopkeepers", 4500: "laborers"}
 iron_resource_value = 40
 iron_building_cc = 400
@@ -61,10 +61,10 @@ tool_base_value = 40
 #available credit. This will be the baseline of 'acceptable'.
 
 
-def acceptable_deficit_rate(GDP, expenses, growth):
+def acceptable_deficit_rate(stats):
 
-    yearly_expenses = abs(expenses * 52.1429) #number is the decimal point for weeks in a year
-    expected_GDP_increase = GDP * growth
+    yearly_expenses = abs(stats["expenses"] * 52.1429) #number is the decimal point for weeks in a year
+    expected_GDP_increase = stats["GDP"] * stats["growth"]
 
     growth_ratio = abs(expected_GDP_increase/yearly_expenses)
     growth_string = f"{(growth_ratio * 100):.2f}"
@@ -74,7 +74,7 @@ def acceptable_deficit_rate(GDP, expenses, growth):
 
     if growth_ratio < .8:
         print("Rethink your planning")
-        print("You have a projected balance of $" + balance_string + ", under expectations. You growing at a rate of " + growth_string + "% compared to your expenses.")
+        print("You have a projected balance of $" + balance_string + ", under expectations. You are growing at a rate of " + growth_string + "% compared to your expenses.")
 
     elif growth_ratio > 1.6:
         print("Playing it safe")
@@ -84,60 +84,60 @@ def acceptable_deficit_rate(GDP, expenses, growth):
         print("Right on target")
         print("You have a projected balance of $" + balance_string + ", meeting expectations. You are growing at a rate of " + growth_string + "% compared to your expenses.")
 
-#Below is the function to alter user information. Currently not in use
-""" 
-def user_info(change='yes'):
+
+def user_info_ask():
     
-    if change == 'yes' or change == 'y':
-        
-        user_GDP = float(input("What is your current GDP? "))
+    changing_user_info = True
+    while changing_user_info:
+        try:
+            user_GDP = float(input("What is your current GDP? "))
 
         #expenses will refer to the in game indicator for spent funds, which displays the funds spent on a weekly basis
-        user_expenses = float(input("What is your weekly expense? "))
+            user_expenses = float(input("What is your weekly expense? "))
 
         #Number will be represented as a decimal, but entered as a percentage
-        user_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
-"""
+            user_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
+        except ValueError:
+            print("Please enter each question with digits only")
+            continue
+        user_country_dict = {"GDP": user_GDP, "expenses": user_expenses, "growth": user_predicted_growth}
+        return user_country_dict
 
 
-def __main__():
+def main():
 
-    #User info in progress, must relaunch program to change
-    #user_info()
-
-    user_GDP = float(input("What is your current GDP? "))
-
-    #expenses will refer to the in game indicator for spent funds, which displays the funds spent on a weekly basis
-    user_expenses = float(input("What is your weekly expense? "))
-
-    #Number will be represented as a decimal, but entered as a percentage
-    user_predicted_growth = float(input("How much growth (in percentage) do you expect for the year? "))/100.00
+    #Initialize user information inputs
+    user_country_stats = user_info_ask()
 
     tool_in_use = True
-    while tool_in_use == True:
-        print("Which tool would you like to select? (Select with the associated number)")
-        select_tool = int(input("1. Deficit Spending Calculator; 2. Change Country Information: "))
+    while tool_in_use:
+        try:
+            print("Which tool would you like to select? (Select with the associated number)")
+            select_tool = int(input("1. Deficit Spending Calculator; 2. Change Country Information: "))
+        except ValueError:
+            print("Please be sure to type in exclusively the number of the tool you wish to choose")
+            continue
 
         if select_tool == 1:
-            acceptable_deficit_rate(user_GDP, user_expenses, user_predicted_growth)
+            acceptable_deficit_rate(user_country_stats)
 
-        #elif select_tool == 2:
-            #user_info(True)
+        elif select_tool == 2:
+            user_country_stats = user_info_ask()
 
         else:
             print("Invalid input, does not exist")
         
         reselect_input = input("Do you wish to use another tool? (yes/y or no/n): ")
-        if reselect_input.lower() != "yes" and reselect_input.lower() != "y":
-            #user_change_input = input("Do you wish to alter any of your nation's information? (yes/y or no/n)")
-            #user_info(user_change_input.lower())
-            break
+        
+        if reselect_input.lower() == "yes" or reselect_input.lower() == "y":
+            continue
         else:
-            pass
+            break
 
     print("Ending now.")    
 
-__main__()
+if __name__ == "__main__":
+    main()
         
         
         
