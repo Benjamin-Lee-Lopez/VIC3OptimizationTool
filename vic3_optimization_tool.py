@@ -16,6 +16,50 @@ Victoria 3 Optimization Tool v0.01
 #Austria will be our default to experiment with. Will likely need to set up objects what each country has.
 #May need to do the same with the states of the countries in question.
 
+#State Class, will use base static stats like population, GDP, exploitable resources, arable land, and natural bonuses,
+#and become dynamic through either changes the player has made in their game, or the changes proposed/theorized by this program.
+
+class State:
+    def __init__(self, pop_count, state_GDP, exploitable_raw_resources, arable_land, state_bonus=False, buildings="N/A"):
+        #shortening down these class variables when possible, as restating 'state' when calling variables is unneccessary. saying 'New York.state_GDP' is not useful.
+        #Exception may be made if there is a state that matches a country name. I.E. Georgia state vs Georgia the country. But it is more likely that I change the class's name
+        #for those state/country pairs.
+        self.pop_count = pop_count
+        self.GDP = state_GDP
+        self.raw_resources = exploitable_raw_resources
+        #self.built_resources = exploitable_raw_resources[] This will be for raw resources that have a building associated with them. Probably using the building variable
+        self.arable_land = arable_land
+        self.bonus = state_bonus
+        self.buildings = buildings
+    
+    def __rep__(self):
+        print("The state of " + type(self).__name__ + " currently has a population of " + str(self.pop_count) + ", " + self.bonus_check()) #Check to see if this is how you display a name for class variable, needs confirm
+    
+    def bonus_check(self):
+        if len(self.bonus) > 2:
+            bonus_string = "This state benefits from"            
+            for i in range(len(self.bonus)-1):
+                bonus_string += (" " + self.bonus[i] + ",") #This will add each bonus, excluding the LAST bonus, before fixing the grammer, and then adding the last item
+            bonus_string += (" and " + self.bonus[-1] + ".")
+        
+        elif len(self.bonus) > 1:
+            bonus_string = "This state benefits from " + self.bonus[0] + " and " + self.bonus[1] + "."
+            
+        elif len(self.bonus) == 1:
+            bonus_string = "This state benefits from " + self.bonus[0] + "."
+        
+        else:
+            bonus_string = "This state has no benefits."
+        
+        return bonus_string
+            
+#Test case for State
+
+#California = State(100_000, 50_000, {"logs: 5"}, 5, [Rivers, Mountains, the Suez Canal], "N/A")
+#print(California.__rep__())
+
+
+
 #raw material options, we will have to assume inability to trade at the moment and no price flexibility
 
 raw_resource_names = ["log", "iron", "coal", "gold"]
